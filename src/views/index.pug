@@ -3,61 +3,74 @@ html
     head 
         title A very (in)secure app ♡
         link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css")
-        //- link(rel="stylesheet", href="/css/global.css")
+        link(rel="stylesheet", href="/css/global.css")
     body
-        .container.mt-5
-        h1 Pozdrav iz vrlo sigurne aplikacije!(trust)
-        h3 Komentari 
-        if comments.length
-            each c in comments
-                .card.mb-2 
-                h5=c.author 
-                p!=c.body
-                small=c.created_at
-
-        h3 Sudjelujte u raspravi - dodajte svoj komentar 
-        if comments.length
-            button#clear-comments.btn.btn-custom() Izbriši 
-        form(id="form" action="/add-comment" method="POST")
-            input(type="checkbox" name="xssEnabled" checked=vulnerable)
-            p Omogući ranjivost "pohranjeni XSS"
-            .form-group.mb-3
-                label(for="author") Autor
-                input.form-control(type="text" name="author" id="author" required)
-            .form-group.mb-3
-                label(for="comment") Napišite komentar
-                textarea.form-control(type="text" name="comment" id="comment" rows="10" placeholder="Napišite komentar" required)    
-            button.btn.btn-custom(type="submit") Objavi 
-
-        h3  Registar korisnika 
-        form(id="form" action="/add-user" method="POST")
-            input(type="checkbox" name="sdeEnabled" checked=vulnerable)
-            p Omogući ranjivost "nesigurna pohrana osjetljivih podataka"
-            .form-group.mb-3
-                label(for="first_name") Ime
-                input.form-control(type="text" name="first_name" id="first_name" required)
-            .form-group.mb-3
-                label(for="last_name") Prezime
-                input.form-control(type="text" name="last_name" id="last_name" required)
-            .form-group.mb-3
-                label(for="username") Korisničko ime ili alijas
-                input.form-control(type="text" name="username" id="username" required)
-            .form-group.mb-3
-                label(for="password") Lozinka
-                input.form-control(type="password" name="password" id="password" required)    
-            button.btn.btn-custom(type="submit") Unesi 
-            table.table.table-striped 
-                thead   
-                    tr 
-                        th Ime 
-                        th Prezime 
-                        th Korisničko ime 
-                        th Lozinka 
-                tbody
-                    each u in users
+        .mt-5.mx-5
+            h1 Pozdrav iz vrlo sigurne aplikacije!
+            hr
+            h2 Prva ranjivost: pohranjeni XSS
+            p Ovdje će biti kratke upute kako ovaj dio stranice demonstrira ranjivost
+            .box-pink
+                h3 Komentari 
+                if comments.length
+                    each c in comments 
+                        .mx-4.box
+                            h5=c.author 
+                            p!=c.body
+                            small=c.created_at
+                if comments.length
+                    .mx-4.mt-3
+                        button#clear-comments.btn.btn-custom() Izbriši sve komentare
+                else 
+                    p Još nema komentara - napiši prvi komentar
+            .box.w-75.mb-5
+                h3 Sudjelujte u raspravi - dodajte svoj komentar 
+                form(id="form" action="/add-comment" method="POST")
+                    .form-check-inline
+                        input.form-check-input.me-2(type="checkbox" name="xssEnabled")
+                        label.form-check-label Omogući ranjivost "pohranjeni XSS"
+                    .form-group.mb-3
+                        label(for="author") Autor
+                        input.form-control(type="text" name="author" id="author" required)
+                    .form-group.mb-3
+                        label(for="comment") Napišite komentar
+                        textarea.form-control(type="text" name="comment" id="comment" rows="10" placeholder="Napišite komentar" required)    
+                    button.btn.btn-custom(type="submit") Objavi 
+            hr
+            h2 Druga ranjivost: nesigurna pohrana osjetljivih podataka
+            p Ovdje će biti kratke upute kako ovaj dio stranice demonstrira ovu ranjivost
+            .box.w-75
+                h3  Registar korisnika 
+                form(id="form" action="/add-user" method="POST")
+                    .form-check-inline
+                    input.form-check-input.me-2(type="checkbox" name="sdeEnabled")
+                    label.form-check-label Omogući ranjivost "nesigurna pohrana osjetljivih podataka"
+                    .form-group.mb-3
+                        label(for="first_name") Ime
+                        input.form-control(type="text" name="first_name" id="first_name" required)
+                    .form-group.mb-3
+                        label(for="last_name") Prezime
+                        input.form-control(type="text" name="last_name" id="last_name" required)
+                    .form-group.mb-3
+                        label(for="username") Korisničko ime ili alijas
+                        input.form-control(type="text" name="username" id="username" required)
+                    .form-group.mb-3
+                        label(for="password") Lozinka
+                        input.form-control(type="password" name="password" id="password" required)    
+                    button.btn.btn-custom(type="submit") Unesi
+            .box-pink 
+                table.table.table-striped 
+                    thead   
                         tr 
-                            td= u.first_name
-                            td= u.last_name
-                            td= u.username
-                            td= u.password
+                            th Ime 
+                            th Prezime 
+                            th Korisničko ime 
+                            th Lozinka 
+                    tbody
+                        each u in users
+                            tr 
+                                td= u.first_name
+                                td= u.last_name
+                                td= u.username
+                                td= u.password
         script(src="/js/script.js")   
