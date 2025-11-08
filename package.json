@@ -1,0 +1,25 @@
+{
+	"scripts": {
+		"build": "npm run clean && tsc && npm run copy-files",
+		"clean": "shx rm -rf dist",
+		"copy-files": "shx cp -r src/views dist && shx cp -r src/public dist",
+		"start": "node dist/server.js"
+	},
+	"dependencies": {
+		"bcryptjs": "^3.0.3",
+		"cookie-parser": "^1.4.7",
+		"dotenv": "^17.2.3",
+		"express": "^5.1.0",
+		"pg": "^8.16.3",
+		"pug": "^3.0.3"
+	},
+	"devDependencies": {
+		"@types/cookie-parser": "^1.4.10",
+		"@types/express": "^5.0.5",
+		"@types/node": "^24.10.0",
+		"@types/pg": "^8.15.6",
+		"shx": "^0.4.0",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.9.3"
+	}
+}
