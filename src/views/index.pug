@@ -9,7 +9,10 @@ html
             h1 Pozdrav iz vrlo sigurne aplikacije!
             hr
             h2 Prva ranjivost: pohranjeni XSS
-            p Ovdje će biti kratke upute kako ovaj dio stranice demonstrira ranjivost
+            p Na primjeru foruma s komentarima pokazana je ranjivost pohranjeni XSS. 
+            p Korisnik tj. autor komentara treba unijeti ime te sadržaj komentara u tekstualna polja. Ranjivost se omogućuje uključivanjem checkboxa. 
+            p Kada je ranjivost omogućena, korisnički input se ne sanitizita pa tako ako korisnik unese u polje za komentar npr. "&lt;script&gt;alert('XSS test');&lt;/script&gt;" to će se pohraniti i izvršiti kao skripta - pojavit će se alert, dok će se u suprotnom sanitizirati i pohraniti kao obični tekst.
+            p Napomena: poanta pohranjenog XSS-a je da se nakon pohrane izvrši automatski pri svakom otvaranju stranice, ali kako to ne bi bilo naporno pri testiranju svega ostaloga, postoji gumb koji briše sve pohranjene komentare :)
             .box-pink
                 h3 Komentari 
                 if comments.length
@@ -38,7 +41,8 @@ html
                     button.btn.btn-custom(type="submit") Objavi 
             hr
             h2 Druga ranjivost: nesigurna pohrana osjetljivih podataka
-            p Ovdje će biti kratke upute kako ovaj dio stranice demonstrira ovu ranjivost
+            p Na primjeru registra korisnika demonstrirana je nesigurna pohrana osjetljivih podataka. Kada je checkbox isključen i ranjivost onemogućena, korisnikova lozinka pohranjuje se u hashiranom obliku, a kada je ranjivost uključena ona se pohranjuje nesigurno u plaintext obliku. 
+            p U tablici su prikazani zapisi iz baze podataka koji pokazuju kako izgleda sigurna vs nesigurna pohrana ovisno o tome je li ranjivost omogućena.
             .box.w-75
                 h3  Registar korisnika 
                 form(id="form" action="/add-user" method="POST")
